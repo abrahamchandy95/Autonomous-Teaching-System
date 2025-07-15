@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { FileText } from "lucide-react";
-import { Topic } from "@/types/topic";
+import { Topic } from "./data/types";
 
 export default function AssessmentDialog({ topic }: { topic: Topic }) {
   return (
