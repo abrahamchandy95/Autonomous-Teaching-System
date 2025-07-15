@@ -1,0 +1,40 @@
+import { Topic } from "./types";
+
+export const mockTopics: Topic[] = [
+  {
+    id: "1",
+    name: "Quadratic Equations",
+    confidence: 70,
+    conversationCount: 23,
+    difficulty: "Medium",
+    attempts: 3,
+    passes: 2,
+    lessonsViewed: 1,
+    suggestedPrerequisites: ["Linear Equations", "Factoring Polynomials"],
+    achievements: ["first_pass"],
+  },
+  {
+    id: "2",
+    name: "Photosynthesis Process",
+    confidence: 45,
+    conversationCount: 18,
+    difficulty: "Hard",
+    attempts: 1,
+    passes: 1,
+    lessonsViewed: 2,
+    suggestedPrerequisites: ["Cell Structure", "Chemical Reactions"],
+    achievements: ["first_pass"],
+  },
+  {
+    id: "3",
+    name: "French Verb Conjugation",
+    confidence: 82,
+    conversationCount: 31,
+    difficulty: "Easy",
+    attempts: 0,
+    passes: 0,
+    lessonsViewed: 0,
+    suggestedPrerequisites: ["Basic French Vocabulary", "Present Tense"],
+    achievements: [],
+  },
+];
