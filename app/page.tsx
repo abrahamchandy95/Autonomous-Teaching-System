@@ -3,7 +3,7 @@
 import { useState, useCallback } from "react";
 
 import { Sidebar, type View } from "@/app/components/sidebar";
-import OverviewDashboard from "@/app/components/overview-dashboard";
+import OverviewDashboard from "@/app/components/overview";
 
 import LearnFromChats from "@/app/components/learnFromChats";
 import ReinforcedTutor from "@/app/components/reinforcedTutor";
