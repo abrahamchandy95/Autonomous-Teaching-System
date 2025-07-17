@@ -7,7 +7,7 @@ import OverviewDashboard from "@/app/components/overview";
 
 import LearnFromChats from "@/app/components/learnFromChats";
 import ReinforcedTutor from "@/app/components/reinforcedTutor";
-import LearnerNetworks from "@/app/components/learner-networks";
+import LearnerNetwork from "@/app/components/learnerNetworks";
 
 export default function ATSDashboard() {
   const [activeView, setActiveView] = useState<View>("overview");
@@ -22,7 +22,7 @@ export default function ATSDashboard() {
       case "reinforced-tutor":
         return <ReinforcedTutor />;
       case "learner-networks":
-        return <LearnerNetworks />;
+        return <LearnerNetwork />;
       default:
         return <OverviewDashboard selectViewAction={selectViewAction} />;
     }
