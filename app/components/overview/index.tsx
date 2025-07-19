@@ -1,22 +1,31 @@
 "use client";
 
-import Header from "./components/Header";
+import PageHeader from "@/app/components/shared/PageHeader";
 import KpiGrid from "./components/KpiGrid";
 import RecentActivity from "./components/RecentActivity";
 import Leaderboard from "./components/Leaderboard";
 import type { View } from "@/app/components/sidebar";
 
-export default function OverviewDashboard({
-  selectViewAction,
-}: {
+interface DashboardProps {
+  studentName: string;
   selectViewAction: (v: View) => void;
-}) {
+}
+
+export default function OverviewDashboard({
+  studentName,
+  selectViewAction,
+}: DashboardProps) {
   return (
     <section className="space-y-6">
-      <Header />
+      <PageHeader
+        as="header"
+        title="Autonomous Teaching System"
+        subtitle="Comprehensive AI‑powered educational platform"
+        studentName={studentName}
+      />
+
       <KpiGrid setViewAction={selectViewAction} />
 
-      {/* lower two‑card grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <RecentActivity />
         <Leaderboard />

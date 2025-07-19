@@ -11,9 +11,10 @@ import LearnerNetwork from "@/app/components/learnerNetworks";
 
 export default function ATSDashboard() {
   const [activeView, setActiveView] = useState<View>("overview");
-
-  /* stable setter to prevent needless re‑renders inside Sidebar */
   const selectViewAction = useCallback((v: View) => setActiveView(v), []);
+
+  /* hard‑coded for now; later pull from auth/session */
+  const studentName = "Student #1247";
 
   const renderView = () => {
     switch (activeView) {
@@ -24,7 +25,12 @@ export default function ATSDashboard() {
       case "learner-networks":
         return <LearnerNetwork />;
       default:
-        return <OverviewDashboard selectViewAction={selectViewAction} />;
+        return (
+          <OverviewDashboard
+            studentName={studentName}
+            selectViewAction={selectViewAction}
+          />
+        );
     }
   };
 
