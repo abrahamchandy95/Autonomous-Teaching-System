@@ -6,9 +6,9 @@ import {
 } from "@/components/ui/card";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import { Topic } from "../data/types";
-import DifficultyBadge from "./DifficultyBadge";
-import TopicDetails from "./TopicDetails";
-import { X509Certificate } from "crypto";
+import DifficultyBadge from "../components/DifficultyBadge";
+import TopicMetrics from "../components/TopicMetrics";
+import TopicActions from "../components/TopicActions";
 
 interface TopicProps {
   topic: Topic;
@@ -25,64 +25,62 @@ interface ConfidenceProps {
   confidence: number;
 }
 
-export default function TopicProcess({ topic, open, onToggle }: TopicProps) {
+export default function TopicProgress({ topic, open, onToggle }: TopicProps) {
   return (
     <Card className="overflow-hidden">
       <ExpandableHeader topic={topic} open={open} onToggle={onToggle} />
-      {open && <TopicDetails topic={topic} />}
+      {open && (
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 border-t bg-gray-50 p-6">
+          <TopicMetrics topic={topic} />
+          <TopicActions topic={topic} />
+        </div>
+      )}
     </Card>
   );
 }
 
-const ExpandableHeader = ({ topic, open, onToggle }: TopicProps) => {
-  return (
-    <CardHeader
-      onClick={onToggle}
-      className="cursor-pointer hover:bg-gray-50 transition-colors"
-    >
-      <div className="flex items-center justify-between">
-        <TopicEngagement topic={topic} open={open} />
-        <div className="flex items-center space-x-3">
-          <DifficultyBadge difficulty={topic.difficulty} />
-          <ConfidenceBadge confidence={topic.confidence} />
-        </div>
-      </div>
-    </CardHeader>
-  );
-};
-
-const TopicEngagement = ({ topic, open }: EngagementProps) => {
-  return (
-    <div className="flex items-center space-x-3">
-      {open ? (
-        <ChevronDown className="h-5 w-5 text-gray-500" />
-      ) : (
-        <ChevronRight className="h-5 w-5 text-gray-500" />
-      )}
-      <div>
-        <CardTitle className="text-lg">{topic.name}</CardTitle>
-        <CardDescription>
-          Mentioned in {topic.conversationCount} conversations
-        </CardDescription>
+/* ───────────────────────────────────────── header block ───────────────────────────────────────── */
+const ExpandableHeader = ({ topic, open, onToggle }: TopicProps) => (
+  <CardHeader
+    onClick={onToggle}
+    className="cursor-pointer hover:bg-gray-50 transition-colors"
+  >
+    <div className="flex items-center justify-between">
+      <TopicEngagement topic={topic} open={open} />
+      <div className="flex items-center space-x-3">
+        <DifficultyBadge difficulty={topic.difficulty} />
+        <ConfidenceBadge confidence={topic.confidence} />
       </div>
     </div>
-  );
-};
+  </CardHeader>
+);
 
+/* ───────────────────────────────────────── engagement (title + mention count) ───────────────────────────────────────── */
+const TopicEngagement = ({ topic, open }: EngagementProps) => (
+  <div className="flex items-center space-x-3">
+    {open ? (
+      <ChevronDown className="h-5 w-5 text-gray-500" />
+    ) : (
+      <ChevronRight className="h-5 w-5 text-gray-500" />
+    )}
+    <div>
+      <CardTitle className="text-lg">{topic.name}</CardTitle>
+      <CardDescription>
+        Mentioned in {topic.conversationCount} conversations
+      </CardDescription>
+    </div>
+  </div>
+);
+
+/* ───────────────────────────────────────── confidence badge ───────────────────────────────────────── */
 const ConfidenceBadge = ({ confidence }: ConfidenceProps) => {
-  let color = "";
+  const color =
+    confidence >= 70
+      ? "text-green-600"
+      : confidence >= 50
+        ? "text-yellow-600"
+        : "text-red-600";
 
-  switch (true) {
-    case confidence >= 70:
-      color = "text-green-600";
-      break;
-    case confidence >= 50:
-      color = "text-yellow-600";
-      break;
-    default:
-      color = "text-red-600";
-      break;
-  }
   return (
     <div className="text-right">
       <div className={`text-lg font-semibold ${color}`}>{confidence}%</div>

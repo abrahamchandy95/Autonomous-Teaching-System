@@ -1,14 +1,14 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ReactNode } from "react";
 
-interface Props {
+interface CardProps {
   title: string;
   value: string | number;
   subtitle?: string;
   icon: ReactNode;
 }
 
-export default function StatsCard({ title, value, subtitle, icon }: Props) {
+export default function KpiCard({ title, value, subtitle, icon }: CardProps) {
   return (
     <Card>
       <CardHeader className="flex flex-row items-center space-y-0 pb-2">
