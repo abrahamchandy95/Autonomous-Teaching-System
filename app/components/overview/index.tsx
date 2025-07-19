@@ -17,12 +17,13 @@ export default function OverviewDashboard({
 }: DashboardProps) {
   return (
     <section className="space-y-6">
-      <PageHeader
-        as="header"
-        title="Autonomous Teaching System"
-        subtitle="Comprehensive AI‑powered educational platform"
-        studentName={studentName}
-      />
+      <header>
+        <PageHeader
+          title="Autonomous Teaching System"
+          subtitle="Comprehensive AI‑powered educational platform"
+          studentName={studentName}
+        />
+      </header>
 
       <KpiGrid setViewAction={selectViewAction} />
 
