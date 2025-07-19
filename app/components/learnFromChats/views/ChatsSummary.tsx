@@ -1,7 +1,7 @@
 "use client";
 
 import { Users, TrendingUp, Trophy } from "lucide-react";
-import KpiCard from "../components/KpiCard.tsx";
+import KpiCard from "../components/KpiCard";
 
 interface ChatSummaryProps {
   totalConversations: number;
