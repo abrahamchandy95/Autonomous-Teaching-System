@@ -1,16 +1,13 @@
 "use client";
 
-import { useState } from "react";
 import LearnerProfile, {
     type Learner,
 } from "@/app/components/overview/components/LearnerProfile";
-import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { useState } from "react";
 
 export default function ProfilePage() {
-    /* ----------------------------------------------------------------
-     *  Local learner state (replace with real data or global store)
-     * ---------------------------------------------------------------- */
     const [profile, setProfile] = useState<Learner>({
         name: "Student #1247",
         age: 15,
@@ -19,11 +16,9 @@ export default function ProfilePage() {
         interests: "Physics • Coding • Music",
     });
 
-    /* ----------------------------------------------------------------
-     *  Layout
-     * ---------------------------------------------------------------- */
     return (
-        <main className="px-6 py-10 mx-auto max-w-5xl space-y-10">
+        <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12">
+            {/* Header */}
             <header className="flex items-center justify-between">
                 <h1 className="text-3xl font-semibold tracking-tight">
                     Edit Profile
@@ -33,6 +28,7 @@ export default function ProfilePage() {
                 </Button>
             </header>
 
+            {/* Profile editor fills the container’s width */}
             <LearnerProfile
                 learner={profile}
                 onSaveAction={setProfile}

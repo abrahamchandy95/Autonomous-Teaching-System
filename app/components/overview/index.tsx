@@ -20,6 +20,7 @@ export default function OverviewDashboard({
 }: OverviewProps) {
     return (
         <section className="space-y-6">
+            {/* ---------------- Page header ---------------- */}
             <header>
                 <PageHeader
                     title="Autonomous Teaching System"
@@ -30,17 +31,32 @@ export default function OverviewDashboard({
 
             <WelcomeBanner studentName={profile.name} />
 
-            <div className="flex items-center justify-between">
-                <h2 className="text-xl font-semibold">{profile.name}</h2>
+            {/* ---------------- Avatar + details row ---------------- */}
+            <div className="flex flex-col lg:flex-row items-center lg:items-start gap-6">
+                {/* Avatar */}
                 <AvatarSelector
                     name={profile.name}
                     editable={false}
                     className="h-64 w-64"
                 />
+
+                {/* Details */}
+                <div className="space-y-2 text-center lg:text-left">
+                    <h2 className="text-2xl font-semibold">{profile.name}</h2>
+                    <p className="text-gray-600">
+                        <span className="font-medium">Grade:</span>{" "}
+                        {profile.grade}
+                    </p>
+                    <p className="text-gray-600">
+                        <span className="font-medium">Age:</span> {profile.age}
+                    </p>
+                </div>
             </div>
 
+            {/* ---------------- KPI grid ---------------- */}
             <KpiGrid setViewAction={setViewAction} />
 
+            {/* ---------------- Activity + leaderboard ---------------- */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <RecentActivity />
                 <Leaderboard />

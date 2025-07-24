@@ -48,8 +48,7 @@ export default function LearnerProfile({
             setDraft((d) => ({ ...d, [key]: value }));
 
     return (
-        <div className="p-6 border border-gray-200 rounded-xl max-w-4xl mx-auto space-y-8">
-            {/* ---------------- Header ---------------- */}
+        <div className="p-8 border border-gray-200 rounded-xl w-full max-w-6xl mx-auto space-y-10 shadow-sm">
             <header className="flex items-center justify-between">
                 <h2 className="text-xl font-semibold">Learner Profile</h2>
                 {editable && !editing && (

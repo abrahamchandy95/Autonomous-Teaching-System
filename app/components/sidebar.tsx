@@ -1,10 +1,7 @@
-/* ---------------------------------------------------------------- *
- *  sidebar.tsx                                                     *
- * ---------------------------------------------------------------- */
-
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { Home, MessageSquare, Brain, Share2, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -25,16 +22,9 @@ export type View =
  * ---------------------------------------------------------------- */
 
 interface SidebarProps {
-    /** Which dashboard section is currently selected */
     currentView: View;
-
-    /** Callback to switch sections */
     changeViewAction: (view: View) => void;
-
-    /** Learner data for the footer (name, avatar, etc.) */
     profile: Learner;
-
-    /** Callback to persist profile changes (if you wire editing later) */
     saveProfileAction: (next: Learner) => void;
 }
 
@@ -42,12 +32,7 @@ interface SidebarProps {
  *  Navigation menu metadata                                        *
  * ---------------------------------------------------------------- */
 
-const MENU: {
-    id: View;
-    label: string;
-    icon: React.ComponentType<{ className?: string; "aria-hidden"?: boolean }>;
-    desc: string;
-}[] = [
+const MENU = [
     {
         id: "overview",
         label: "Overview",
@@ -72,7 +57,7 @@ const MENU: {
         icon: Share2,
         desc: "Knowledge‑graph clusters",
     },
-];
+] as const;
 
 /* ---------------------------------------------------------------- *
  *  Main component                                                  *
@@ -83,7 +68,6 @@ export default function Sidebar({
     changeViewAction,
     profile,
 }: SidebarProps) {
-    /* gives a fluid but capped width */
     const sidebarWidth = "clamp(14rem, 18vw, 20rem)";
 
     return (
@@ -91,7 +75,7 @@ export default function Sidebar({
             className="flex flex-col flex-none h-dvh bg-white border-r border-gray-200 overflow-y-auto"
             style={{ width: sidebarWidth }}
         >
-            <HeaderSpacer />
+            <LogoHeader />
 
             <Navigation currentView={currentView} onChange={changeViewAction} />
 
@@ -100,18 +84,28 @@ export default function Sidebar({
     );
 }
 
-/* =================================================================
- *  Helpers                                                         *
+/* ================================================================= *
+ *  Helpers                                                          *
  * =================================================================*/
 
-/* Top padding so content aligns with avatar in Overview */
-const HeaderSpacer = () => (
-    <header className="p-6 border-b border-gray-200">
-        <div className="w-full aspect-square" />
-    </header>
-);
-
-/* ----------  Navigation list  ---------- */
+/* ---------- 1. Top logo banner ----------------------------------- */
+function LogoHeader() {
+    return (
+        <header className="p-6 border-b border-gray-200">
+            <div className="relative w-full aspect-[4/1]">
+                <Image
+                    src="/airs.png"
+                    alt="AIRS logo"
+                    fill
+                    priority
+                    className="object-contain"
+                    sizes="100vw"
+                />
+            </div>
+        </header>
+    );
+}
+/* ---------- 2. Navigation list ----------------------------------- */
 function Navigation({
     currentView,
     onChange,
@@ -147,7 +141,7 @@ function Navigation({
     );
 }
 
-/* ----------  Footer link to /profile  ---------- */
+/* ---------- 3. Footer link to /profile --------------------------- */
 function FooterLink({ username }: { username: string }) {
     return (
         <Button
