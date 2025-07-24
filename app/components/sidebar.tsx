@@ -5,7 +5,7 @@ import Image from "next/image";
 import { Home, MessageSquare, Brain, Share2, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import type { Learner } from "@/app/components/overview/components/LearnerProfile";
+import type { Learner } from "./shared/LearnerProfile";
 
 /* ---------------------------------------------------------------- *
  *  Route IDs                                                       *

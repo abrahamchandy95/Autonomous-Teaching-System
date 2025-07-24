@@ -10,7 +10,7 @@ import {
     SelectContent,
     SelectItem,
 } from "@/components/ui/select";
-import AvatarSelector from "../../avatar/AvatarSelector";
+import AvatarSelector from "../avatar/AvatarSelector";
 
 /* ------------------------------------------------------------------ *
  *  Types                                                              *

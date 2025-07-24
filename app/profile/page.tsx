@@ -2,7 +2,7 @@
 
 import LearnerProfile, {
     type Learner,
-} from "@/app/components/overview/components/LearnerProfile";
+} from "../components/shared/LearnerProfile";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";

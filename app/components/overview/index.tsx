@@ -7,7 +7,7 @@ import Leaderboard from "./components/Leaderboard";
 import WelcomeBanner from "./components/WelcomeBanner";
 import AvatarSelector from "../avatar/AvatarSelector";
 import type { View } from "@/app/components/sidebar";
-import type { Learner } from "./components/LearnerProfile";
+import type { Learner } from "../shared/LearnerProfile";
 
 interface OverviewProps {
     profile: Learner;

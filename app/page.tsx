@@ -9,7 +9,7 @@ import LearnFromChats from "@/app/components/learnFromChats";
 import ReinforcedTutor from "@/app/components/reinforcedTutor";
 import LearnerNetwork from "@/app/components/learnerNetworks";
 
-import type { Learner } from "@/app/components/overview/components/LearnerProfile";
+import type { Learner } from "./components/shared/LearnerProfile";
 
 export default function ATSHomePage() {
     /* -------------------------------------------------------------- *
