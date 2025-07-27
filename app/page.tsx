@@ -1,26 +1,25 @@
 "use client";
 
 import { useState, useCallback } from "react";
+import { useRouter } from "next/navigation";
 
-import Sidebar, { type View } from "@/app/components/sidebar";
+import Sidebar, { type View } from "@/app/components/shared/Sidebar";
+
 import OverviewDashboard from "@/app/components/overview";
-
 import LearnFromChats from "@/app/components/learnFromChats";
+import ReviewTopics from "@/app/components/reviewTopics";
+import LearnAssignedTasks from "./components/assignedTopics";
 import ReinforcedTutor from "@/app/components/reinforcedTutor";
 import LearnerNetwork from "@/app/components/learnerNetworks";
 
 import type { Learner } from "./components/shared/LearnerProfile";
 
 export default function ATSHomePage() {
-    /* -------------------------------------------------------------- *
-     *  1. Tab / section state                                        *
-     * -------------------------------------------------------------- */
+    /* ────────── sidebar tab state ────────── */
     const [currentView, setCurrentView] = useState<View>("overview");
     const changeViewAction = useCallback((v: View) => setCurrentView(v), []);
 
-    /* -------------------------------------------------------------- *
-     *  2. Learner profile state (hard‑coded for now)                 *
-     * -------------------------------------------------------------- */
+    /* ────────── learner profile (mock) ────────── */
     const [profile, setProfile] = useState<Learner>({
         name: "Student #1247",
         age: 15,
@@ -29,13 +28,25 @@ export default function ATSHomePage() {
         interests: "Physics • Coding • Music",
     });
 
-    /* -------------------------------------------------------------- *
-     *  3. Which component to show in <main>                          *
-     * -------------------------------------------------------------- */
+    /* ────────── topic‑detail navigation helper ────────── */
+    const router = useRouter();
+    const handleBookReview = useCallback(
+        (bookId: string) => {
+            console.log("handleBookReview got:", bookId);
+            router.push(`/books/${bookId}`);
+        },
+        [router],
+    );
+
+    /* ────────── which section to show ────────── */
     function renderSection() {
         switch (currentView) {
             case "learn-from-chats":
                 return <LearnFromChats />;
+            case "review-topics":
+                return <ReviewTopics onClickAction={handleBookReview} />;
+            case "assigned-learning":
+                return <LearnAssignedTasks onBookClick={handleBookReview} />;
             case "reinforced-tutor":
                 return <ReinforcedTutor />;
             case "learner-networks":
@@ -50,20 +61,15 @@ export default function ATSHomePage() {
         }
     }
 
-    /* -------------------------------------------------------------- *
-     *  4. Layout                                                     *
-     * -------------------------------------------------------------- */
+    /* ────────── layout ────────── */
     return (
         <div className="flex h-screen bg-gray-50">
-            {/* Sidebar */}
             <Sidebar
                 currentView={currentView}
                 changeViewAction={changeViewAction}
                 profile={profile}
                 saveProfileAction={setProfile}
             />
-
-            {/* Main content */}
             <main className="flex-1 overflow-auto p-6">{renderSection()}</main>
         </div>
     );

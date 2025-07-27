@@ -2,10 +2,17 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Home, MessageSquare, Brain, Share2, User } from "lucide-react";
+import {
+    Home,
+    MessageSquare,
+    Brain,
+    Share2,
+    User,
+    ClipboardList,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import type { Learner } from "./shared/LearnerProfile";
+import type { Learner } from "./LearnerProfile";
 
 /* ---------------------------------------------------------------- *
  *  Route IDs                                                       *
@@ -15,7 +22,9 @@ export type View =
     | "overview"
     | "learn-from-chats"
     | "reinforced-tutor"
-    | "learner-networks";
+    | "learner-networks"
+    | "assigned-learning"
+    | "review-topics";
 
 /* ---------------------------------------------------------------- *
  *  Sidebar props                                                   *
@@ -40,11 +49,18 @@ const MENU = [
         desc: "Dashboard overview",
     },
     {
+        id: "assigned-learning",
+        label: "Assigned Learning",
+        icon: ClipboardList,
+        desc: "Tasks from teacher assignments",
+    },
+    {
         id: "learn-from-chats",
         label: "Learn from Chats",
         icon: MessageSquare,
         desc: "Conversation analysis",
     },
+
     {
         id: "reinforced-tutor",
         label: "Reinforced Tutor",
