@@ -1,7 +1,7 @@
 "use client";
 import KpiCard from "./KpiCard";
 import { KPI_CONFIG } from "./config";
-import type { View } from "@/app/components/sidebar";
+import type { View } from "@/app/components/shared/Sidebar";
 
 export default function KpiGrid({
     setViewAction,
