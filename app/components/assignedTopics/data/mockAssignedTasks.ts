@@ -51,7 +51,7 @@ export const mockAssignedTasks: AssignedTask[] = [
                 type: "book",
                 title: "Algebra Survival Guide",
                 author: "Josh Rappaport",
-                coverImageUrl: "/covers/algebra-survival.jpg",
+                coverImageUrl: "/placeholder-book.png",
                 description:
                     "Friendly walkthrough of factoring, roots, and the quadratic formula.",
                 chapters: [
@@ -116,7 +116,6 @@ export const mockAssignedTasks: AssignedTask[] = [
         ],
     },
 
-    /* Biology example */
     {
         id: "bio-photosynthesis-set1",
         title: "Lab prep: Photosynthesis",
@@ -126,11 +125,11 @@ export const mockAssignedTasks: AssignedTask[] = [
         progress: 55,
         resources: [
             {
-                id: "book-a-leaf-in-time", // ← bookId
+                id: "book-a-leaf-in-time",
                 type: "book",
                 title: "A Leaf in Time – Introduction to Photosynthesis",
                 author: "David Walker",
-                coverImageUrl: "/covers/a-leaf-in-time.jpg",
+                coverImageUrl: "/placeholder-book.png",
                 link: "https://www.saps.org.uk/teaching-resources/resources/129/",
                 chapters: [
                     {

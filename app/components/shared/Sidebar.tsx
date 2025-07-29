@@ -108,14 +108,14 @@ export default function Sidebar({
 function LogoHeader() {
     return (
         <header className="p-6 border-b border-gray-200">
-            <div className="relative w-full aspect-[4/1]">
+            <div className="relative w-full aspect-[4/1] [container-type:inline-size]">
                 <Image
                     src="/airs.png"
                     alt="AIRS logo"
                     fill
                     priority
                     className="object-contain"
-                    sizes="100vw"
+                    sizes="100cqw"
                 />
             </div>
         </header>

@@ -13,15 +13,17 @@ export default function ReviewTopics({ onClickAction }: Props) {
         <section className="space-y-6">
             <h1 className="text-2xl font-bold">Topics Needing Review</h1>
 
-            <Tabs defaultValue="learn">
+            <Tabs defaultValue="assigned">
                 <TabsList className="mb-4">
-                    <TabsTrigger value="learn">From Chats</TabsTrigger>
                     <TabsTrigger value="assigned">
-                        Assigned Learning
+                        Learn your Assigned Topics
+                    </TabsTrigger>
+                    <TabsTrigger value="chats">
+                        Explore identified Interests
                     </TabsTrigger>
                 </TabsList>
 
-                <TabsContent value="learn">
+                <TabsContent value="chats">
                     <LearnFromChats />
                 </TabsContent>
 
