@@ -4,28 +4,31 @@ import type { AssignedTask, LearningResource } from "../data/mockAssignedTasks";
 interface Props {
     task: AssignedTask & { needsReview: boolean };
     onAction: (bookId: string) => void;
+    height?: string;
 }
 
-export default function AssignedTaskCard({ task, onAction }: Props) {
+export default function AssignedTaskCard({
+    task,
+    onAction,
+    height = "min-h-76",
+}: Props) {
     const primary = task.resources[0];
 
     return (
         <article
-            className={`border rounded p-4 hover:shadow-lg transition mb-4 ${
-                task.needsReview ? "border-red-500" : "border-gray-300"
-            }`}
+            className={`${height} border rounded p-4 hover:shadow-lg transition mb-4 border-gray-300 flex flex-col justify-between`}
         >
-            <TitleSection task={task} />
-            <ProgressBar progress={task.progress} />
-            {primary && <ResourceLink resource={primary} />}
-            {task.needsReview && <NeedsReviewBadge />}
-            <ActionButton
-                needsReview={task.needsReview}
-                onClick={() => {
-                    console.log("Nav to book:", primary.id);
-                    onAction(primary.id);
-                }}
-            />
+            <div className="flex flex-col gap-2">
+                <TitleSection task={task} />
+                <ProgressBar progress={task.progress} />
+                {primary && <ResourceLink resource={primary} />}
+            </div>
+            {task.needsReview && (
+                <div className="flex items-center gap-4 mt-2">
+                    <NeedsReviewBadge />
+                    <ReviewButton onClick={() => onAction(primary.id)} />
+                </div>
+            )}
         </article>
     );
 }
@@ -79,25 +82,19 @@ function ResourceLink({ resource }: { resource: LearningResource }) {
 
 function NeedsReviewBadge() {
     return (
-        <span className="inline-block bg-red-100 text-red-800 px-2 py-1 rounded-full text-xs mb-2">
+        <span className="inline-block bg-red-100 text-red-800 px-2 py-1 rounded-full text-sm">
             Needs Review
         </span>
     );
 }
 
-function ActionButton({
-    needsReview,
-    onClick,
-}: {
-    needsReview: boolean;
-    onClick: () => void;
-}) {
+function ReviewButton({ onClick }: { onClick: () => void }) {
     return (
         <button
-            className="mt-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 cursor-pointer transition"
+            className="px-4 py-2 bg-gray-200 text-black font-semibold text-sm rounded hover:bg-gray-300 transition"
             onClick={onClick}
         >
-            {needsReview ? "Review Now" : "Study Now"}
+            Review now
         </button>
     );
 }

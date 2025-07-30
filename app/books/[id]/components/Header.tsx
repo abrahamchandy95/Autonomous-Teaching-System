@@ -13,7 +13,6 @@ import type {
 
 dayjs.extend(relativeTime);
 
-/* ╭──────────────── due badge ───────────────╮ */
 const DueBadge = ({ due }: { due: string }) => {
     const days = dayjs(due).diff(dayjs(), "day");
     const palette = {
@@ -38,7 +37,15 @@ const DueBadge = ({ due }: { due: string }) => {
     );
 };
 
-/* ╭──────────────── progress bar with % ─────╮ */
+const MetaDetails = ({ task }: { task: AssignedTask }) => (
+    <div className="flex items-center gap-3 mt-1 text-sm text-gray-500">
+        <span>
+            Assigned by <strong>{task.assignedBy}</strong>
+        </span>
+        <DueBadge due={task.dueDate} />
+    </div>
+);
+
 const ProgressWithLabel = ({ value }: { value: number }) => (
     <div className="relative">
         <Progress value={value} className="h-2 rounded" />
@@ -51,7 +58,15 @@ const ProgressWithLabel = ({ value }: { value: number }) => (
     </div>
 );
 
-/* ╭──────────────── cover image ──────────────╮ */
+const ReviewProgress = ({ value }: { value: number }) => (
+    <div className="mt-3 space-y-1">
+        <ProgressWithLabel value={value} />
+        <span className="text-xs text-gray-500">
+            {value}% of review completed
+        </span>
+    </div>
+);
+
 const CoverImage = ({ url, title }: { url?: string; title: string }) => (
     <div className="relative aspect-[3/4] w-20 sm:w-24 md:w-28 lg:w-32 flex-none rounded-lg overflow-hidden shadow">
         <Image
@@ -65,7 +80,18 @@ const CoverImage = ({ url, title }: { url?: string; title: string }) => (
     </div>
 );
 
-/* ╭──────────────── main component ───────────╮ */
+const BackButton = ({ onClick }: { onClick: () => void }) => (
+    <Button
+        variant="ghost"
+        onClick={onClick}
+        aria-label="Go Back"
+        className="absolute top-6 left-6 z-10 flex items-center gap-1 pl-4 pr-5 h-9 opacity-60 hover:opacity-100 transition"
+    >
+        <ArrowLeft className="h-5 w-5" />
+        <span className="font-medium">Back</span>
+    </Button>
+);
+
 interface Props {
     task: AssignedTask;
     resource: LearningResource;
@@ -74,41 +100,24 @@ interface Props {
 
 export default function Header({ task, resource, backAction }: Props) {
     return (
-        <header className="w-full flex items-start gap-6 px-6 py-6 bg-white shadow-sm">
-            {/* hard‑left cover */}
-            <CoverImage url={resource.coverImageUrl} title={resource.title} />
+        <header className="relative w-full flex items-start gap-6 px-6 py-6 bg-white shadow-sm">
+            <BackButton onClick={backAction} />
 
-            {/* central meta block */}
-            <div className="flex-1 min-w-0">
-                <h1 className="text-2xl md:text-3xl font-bold truncate">
-                    {resource.title}
-                </h1>
+            <div className="flex items-start gap-6 mt-26 sm:mt-16 lg:mt-10 pl-14 sm:pl-12 lg:pl-10">
+                <CoverImage
+                    url={resource.coverImageUrl}
+                    title={resource.title}
+                />
 
-                <div className="flex items-center gap-3 mt-1 text-sm text-gray-500">
-                    <span>
-                        Assigned by <strong>{task.assignedBy}</strong>
-                    </span>
-                    <DueBadge due={task.dueDate} />
-                </div>
+                <div className="flex-1 min-w-0">
+                    <h1 className="text-2xl md:text-3xl font-bold truncate">
+                        {resource.title}
+                    </h1>
 
-                <div className="mt-3 space-y-1">
-                    <ProgressWithLabel value={task.progress} />
-                    <span className="text-xs text-gray-500">
-                        {task.progress}% of review completed
-                    </span>
+                    <MetaDetails task={task} />
+                    <ReviewProgress value={task.progress} />
                 </div>
             </div>
-
-            {/* back button right‑aligned */}
-            <Button
-                variant="ghost"
-                size="icon"
-                onClick={backAction}
-                aria-label="Go back"
-                className="self-start opacity-60 hover:opacity-100 transition"
-            >
-                <ArrowLeft className="h-5 w-5" />
-            </Button>
         </header>
     );
 }

@@ -7,10 +7,10 @@ import SummaryGrid from "./components/SummaryGrid";
 import AssignedTaskCard from "./components/AssignedTaskCard";
 
 interface Props {
-    onBookClick?: (taskId: string) => void;
+    onReviewClick?: (taskId: string) => void;
 }
 
-const LearnAssignedTasks: React.FC<Props> = ({ onBookClick }) => {
+const LearnAssignedTasks: React.FC<Props> = ({ onReviewClick }) => {
     const { topics: tasks, summary } = useAssignedTasks();
 
     return (
@@ -22,7 +22,7 @@ const LearnAssignedTasks: React.FC<Props> = ({ onBookClick }) => {
                     <AssignedTaskCard
                         key={task.id}
                         task={task}
-                        onAction={onBookClick}
+                        onAction={onReviewClick}
                     />
                 ))}
             </div>

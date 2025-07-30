@@ -1,9 +1,10 @@
 "use client";
 
 import { useState, useCallback } from "react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 import Sidebar, { type View } from "@/app/components/shared/Sidebar";
+import useView from "./components/assignedTopics/hooks/useView";
 
 import OverviewDashboard from "@/app/components/overview";
 import LearnFromChats from "@/app/components/learnFromChats";
@@ -16,8 +17,11 @@ import type { Learner } from "./components/shared/LearnerProfile";
 
 export default function ATSHomePage() {
     /* ────────── sidebar tab state ────────── */
-    const [currentView, setCurrentView] = useState<View>("overview");
-    const changeViewAction = useCallback((v: View) => setCurrentView(v), []);
+    const [currentView, setCurrentView] = useView("overview");
+    const changeViewAction = useCallback(
+        (v: View) => setCurrentView(v),
+        [setCurrentView],
+    );
 
     /* ────────── learner profile (mock) ────────── */
     const [profile, setProfile] = useState<Learner>({
@@ -30,12 +34,16 @@ export default function ATSHomePage() {
 
     /* ────────── topic‑detail navigation helper ────────── */
     const router = useRouter();
-    const handleBookReview = useCallback(
+    const pathname = usePathname();
+    const handleReview = useCallback(
         (bookId: string) => {
-            console.log("handleBookReview got:", bookId);
-            router.push(`/books/${bookId}`);
+            router.push(
+                `/books/${bookId}?from=${encodeURIComponent(
+                    `${pathname}?view=${currentView}`,
+                )}`,
+            );
         },
-        [router],
+        [router, pathname, currentView],
     );
 
     /* ────────── which section to show ────────── */
@@ -44,9 +52,9 @@ export default function ATSHomePage() {
             case "learn-from-chats":
                 return <LearnFromChats />;
             case "review-topics":
-                return <ReviewTopics onClickAction={handleBookReview} />;
+                return <ReviewTopics clickAction={handleReview} />;
             case "assigned-learning":
-                return <LearnAssignedTasks onBookClick={handleBookReview} />;
+                return <LearnAssignedTasks onReviewClick={handleReview} />;
             case "reinforced-tutor":
                 return <ReinforcedTutor />;
             case "learner-networks":
@@ -55,7 +63,7 @@ export default function ATSHomePage() {
                 return (
                     <OverviewDashboard
                         profile={profile}
-                        setViewAction={changeViewAction}
+                        setViewAction={setCurrentView}
                     />
                 );
         }

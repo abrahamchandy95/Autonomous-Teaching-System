@@ -6,25 +6,55 @@ interface Summary {
     completed: number;
 }
 
-interface Props {
+interface SummaryProps {
     summary: Summary;
+    cardHeight?: string;
 }
 
-const SummaryGrid: React.FC<Props> = ({ summary }) => (
-    <div className="grid grid-cols-3 gap-4 mb-6">
-        <div className="p-4 bg-gray-100 rounded shadow">
-            <div className="text-lg font-semibold">{summary.total}</div>
-            <div>Total Assigned</div>
-        </div>
-        <div className="p-4 bg-yellow-100 rounded shadow">
-            <div className="text-lg font-semibold">{summary.needsReview}</div>
-            <div>Needs Review</div>
-        </div>
-        <div className="p-4 bg-green-100 rounded shadow">
-            <div className="text-lg font-semibold">{summary.completed}</div>
-            <div>Completed</div>
-        </div>
-    </div>
-);
+interface TileMetrics {
+    value: number;
+    label: string;
+    color: string;
+    height: string;
+}
 
+function StatTile({ value, label, color, height }: TileMetrics) {
+    return (
+        <div
+            className={`p-4 ${color} ${height} rounded shadow flex flex-col items-center justify-center`}
+        >
+            <div className="text-oxl font-semibold">{value}</div>
+            <div className="text-sm">{label}</div>
+        </div>
+    );
+}
+
+const SummaryGrid: React.FC<SummaryProps> = ({
+    summary,
+    cardHeight = "h-32",
+}) => {
+    const stats = [
+        { value: summary.total, label: "Total Assigned", color: "bg-gray-100" },
+        {
+            value: summary.needsReview,
+            label: "Needs Review",
+            color: "bg-yellow-100",
+        },
+        { value: summary.completed, label: "Completed", color: "bg-green-100" },
+    ];
+
+    return (
+        <div className="grid grid-cols-3 gap-4 mb-6">
+            {stats.map(({ value, label, color }) => (
+                <StatTile
+                    key={label}
+                    value={value}
+                    label={label}
+                    color={color}
+                    height={cardHeight}
+                />
+            ))}
+        </div>
+    );
+};
 export default SummaryGrid;
